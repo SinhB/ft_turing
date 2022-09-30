@@ -4,10 +4,11 @@
     "blank" : ".",
     "states" : [ "scanright", "eraseone", "subone", "skip", "HALT" ],
     "initial" : "scanright",
+    "finals" : [ "HALT" ],
     "transitions" : {
         "scanright": [
             { 
-                "read" : ".", 
+                "learn" : ".", 
                 "to_state": "scanright", 
                 "write": ".", 
                 "action": "RIGHT"

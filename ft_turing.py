@@ -3,8 +3,8 @@
 import argparse
 from json import JSONDecodeError
 
-from core import run_machine
 from error import ParsingError
+from health_check import checks
 
 def get_input():
     """
@@ -13,16 +13,14 @@ def get_input():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("jsonfile", help="json description of the machine")
-    # ,
-    #                     type=argparse.FileType("r"))
     parser.add_argument("input", help="input of the machine", type=str)
     args = parser.parse_args()
     return args
 
 if __name__ == "__main__":
-    arguments = get_input()
+    args = get_input()
     try:
-        run_machine(arguments)
+        machine, input = checks(args)
     except JSONDecodeError as e:
         print("JSON format error")
         print(e)
