@@ -2,7 +2,7 @@ import sys
 import json
 
 def check_state(machine: object, current_state: str):
-    if current_state == 'HALT':
+    if current_state if machine['finals']:
         sys.exit()
     if current_state not in machine['states']:
         sys.exit(f"Sate {current_state} doesn't exist in machine states ({machine['states']})")
