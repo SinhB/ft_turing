@@ -1,17 +1,17 @@
 {
     "name" : "palindrome",
-    "alphabet": [ "1", ".", "0" ],
+    "alphabet": [ "1", ".", "0"],
     "blank" : ".",
-    "states" : [ "e1", "e2", "e3", "e4", "e5", "e6", "e7", "YES", "NO" ],
+    "states" : [ "e1", "e2", "e3", "e4", "e5", "e6", "e7", "YES", "NO", "HALT" ],
     "initial" : "e1",
     "finals" : [ "YES", "NO" ],
     "transitions" : {
         "e1": [
-            { 
+            {
                 "read" : ".", 
                 "to_state": "e2", 
                 "write": ".", 
-                "action": "LEFT"
+                "action": "RIGHT"
             }
         ],
         "e2": [
@@ -19,19 +19,19 @@
                 "read" : "0", 
                 "to_state": "e3", 
                 "write": ".", 
-                "action": "LEFT"
+                "action": "RIGHT"
             },
             { 
                 "read" : "1", 
-                "to_state": "e6" , 
-                "write": ".", 
-                "action": "LEFT"
+                "to_state": "e6", 
+                "write": ".",
+                "action": "RIGHT"
             },
             { 
-                "read" : ".", 
-                "to_state": "YES" , 
-                "write": ".", 
-                "action": "LEFT"
+                "read" : ".",
+                "to_state": "YES", 
+                "write": ".",
+                "action": "RIGHT"
             }
         ],
         "e3": [
@@ -39,19 +39,19 @@
                 "read" : "0", 
                 "to_state": "e3", 
                 "write": "0", 
-                "action": "LEFT"
+                "action": "RIGHT"
             },
             { 
                 "read" : "1", 
-                "to_state": "e3" , 
+                "to_state": "e3", 
                 "write": "1", 
-                "action": "LEFT"
+                "action": "RIGHT"
             },
             { 
                 "read" : ".", 
-                "to_state": "e4" , 
+                "to_state": "e4", 
                 "write": ".", 
-                "action": "RIGHT"
+                "action": "LEFT"
             }
         ],
         "e4": [
@@ -59,19 +59,19 @@
                 "read" : "0", 
                 "to_state": "e5", 
                 "write": ".", 
-                "action": "RIGHT"
+                "action": "LEFT"
             },
             { 
                 "read" : "1", 
-                "to_state": "e3" , 
+                "to_state": "NO", 
                 "write": "1", 
-                "action": "NO"
+                "action": "RIGHT"
             },
             { 
                 "read" : ".", 
-                "to_state": "e4" , 
+                "to_state": "YES", 
                 "write": ".", 
-                "action": "YES"
+                "action": "RIGHT"
             }
         ],
         "e5": [
@@ -79,59 +79,59 @@
                 "read" : "0", 
                 "to_state": "e5", 
                 "write": "0", 
-                "action": "RIGHT"
+                "action": "LEFT"
             },
             { 
                 "read" : "1", 
-                "to_state": "e5" , 
+                "to_state": "e5",
                 "write": "1", 
-                "action": "RIGHT"
+                "action": "LEFT"
             },
             { 
                 "read" : ".", 
-                "to_state": "e2" , 
+                "to_state": "e2",
                 "write": ".", 
-                "action": "LEFT"
+                "action": "RIGHT"
             }
         ],
         "e6": [
             { 
-                "read" : "0", 
+                "read" : "0",
                 "to_state": "e6", 
                 "write": "0", 
-                "action": "LEFT"
+                "action": "RIGHT"
             },
             { 
                 "read" : "1", 
-                "to_state": "e6" , 
+                "to_state": "e6", 
                 "write": "1", 
-                "action": "LEFT"
+                "action": "RIGHT"
             },
             { 
                 "read" : ".", 
-                "to_state": "e7" , 
+                "to_state": "e7", 
                 "write": ".", 
-                "action": "RIGHT"
+                "action": "LEFT"
             }
         ],
         "e7": [
             { 
                 "read" : "0", 
-                "to_state": "e5", 
+                "to_state": "NO", 
                 "write": "0", 
-                "action": "NO"
-            },
-            { 
-                "read" : "1", 
-                "to_state": "e5" , 
-                "write": ".", 
                 "action": "RIGHT"
             },
             { 
+                "read" : "1", 
+                "to_state": "e5", 
+                "write": ".",
+                "action": "LEFT"
+            },
+            { 
                 "read" : ".", 
-                "to_state": "e2" , 
+                "to_state": "YES", 
                 "write": ".", 
-                "action": "YES"
+                "action": "RIGHT"
             }
         ]
     }

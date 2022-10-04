@@ -22,7 +22,7 @@ if __name__ == "__main__":
     args = get_input()
     try:
         machine, input = checks(args)
-        engine(machine=machine, current_state=machine['initial'], tape=input, head=0)
+        engine(machine=machine, current_state=machine['initial'], tape=("." + input + "."), head=0)
     except JSONDecodeError as e:
         print("JSON format error")
         print(e)
