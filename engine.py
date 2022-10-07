@@ -20,7 +20,9 @@ def perform_transition(machine: object, tape: list, head: int, current_state: st
 
 
 def engine(machine: object, current_state: str, tape: list, head: int):
-    if tape[head] not in machine['alphabet']:
-        sys.exit(f"Value {tape[head]} is not in the alphabet")
-    check_state(machine, current_state)
+    if current_state in machine['finals']:
+        sys.exit(f"[{tape[0:head]}<{tape[head]}>{tape[head+1:]}]  |  ({current_state}, {tape[head]})")
+    # if tape[head] not in machine['alphabet']:
+    #     sys.exit(f"Value {tape[head]} is not in the alphabet")
+    # check_state(machine, current_state)     
     perform_transition(machine, tape, head, current_state, list(filter(lambda transition: transition['read'] == tape[head], machine['transitions'][current_state])))
