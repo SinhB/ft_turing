@@ -105,7 +105,7 @@ def check_initial_field(machine: dict):
     """Check if initial field value is in states"""
     if not check_fields([machine["initial"]], machine["states"]):
         raise WrongInitialFieldError(
-            "Initial field value not in states", set(machine["initial"])
+            "Initial field value not in states", machine["initial"]
         )
 
 

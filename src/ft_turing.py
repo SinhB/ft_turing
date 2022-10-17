@@ -27,7 +27,8 @@ if __name__ == "__main__":
         engine(
             machine=machine,
             current_state=machine["initial"],
-            tape=("." + input + "."),
+            tape=(input + "."),
+            # tape=input,
             head=0,
         )
     except JSONDecodeError as e:
