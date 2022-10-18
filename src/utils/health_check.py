@@ -20,7 +20,10 @@ def print_pretty_json(json_dict):
 
 def checks(arguments):
     """Checks arguments"""
-    return input_check(health_check(arguments.jsonfile), arguments.input)
+    if hasattr(arguments, "input"):
+        return input_check(health_check(arguments.jsonfile), arguments.input)
+    return health_check(arguments.jsonfile)
+
 
 
 def health_check(jsonfile: dict):

@@ -1,0 +1,182 @@
+{
+	"name": "02n",
+	"alphabet": [
+		"0",
+		"x",
+		".",
+		"y",
+		"n"
+	],
+	"blank": ".",
+	"states": [
+		"q0",
+		"q1",
+		"q2",
+		"q3",
+		"q4",
+		"qreject",
+		"qaccept",
+		"qend",
+		"HALT"
+	],
+	"initial": "q0",
+	"finals": [
+		"HALT"
+	],
+	"transitions": {
+		"q0": [
+			{
+				"read": "0",
+				"to_state": "q1",
+				"write": ".",
+				"action": "RIGHT"
+			},
+			{
+				"read": ".",
+				"to_state": "qreject",
+				"write": ".",
+				"action": "LEFT"
+			}
+		],
+		"q1": [
+			{
+				"read": "0",
+				"to_state": "q2",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": "x",
+				"to_state": "q1",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": ".",
+				"to_state": "qaccept",
+				"write": ".",
+				"action": "LEFT"
+			}
+		],
+		"q2": [
+			{
+				"read": "0",
+				"to_state": "q3",
+				"write": "0",
+				"action": "RIGHT"
+			},
+			{
+				"read": "x",
+				"to_state": "q2",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": ".",
+				"to_state": "q4",
+				"write": ".",
+				"action": "LEFT"
+			}
+		],
+		"q3": [
+			{
+				"read": "0",
+				"to_state": "q2",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": "x",
+				"to_state": "q3",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": ".",
+				"to_state": "qreject",
+				"write": ".",
+				"action": "LEFT"
+			}
+		],
+		"q4": [
+			{
+				"read": "0",
+				"to_state": "q4",
+				"write": "0",
+				"action": "LEFT"
+			},
+			{
+				"read": "x",
+				"to_state": "q4",
+				"write": "x",
+				"action": "LEFT"
+			},
+			{
+				"read": ".",
+				"to_state": "q1",
+				"write": ".",
+				"action": "RIGHT"
+			}
+		],
+		"qreject": [
+			{
+				"read": "0",
+				"to_state": "qreject",
+				"write": "0",
+				"action": "RIGHT"
+			},
+			{
+				"read": "x",
+				"to_state": "qreject",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": ".",
+				"to_state": "qend",
+				"write": "n",
+				"action": "LEFT"
+			}
+		],
+		"qaccept": [
+			{
+				"read": "0",
+				"to_state": "qaccept",
+				"write": "0",
+				"action": "RIGHT"
+			},
+			{
+				"read": "x",
+				"to_state": "qaccept",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": ".",
+				"to_state": "qend",
+				"write": "y",
+				"action": "LEFT"
+			}
+		],
+		"qend": [
+			{
+				"read": "0",
+				"to_state": "HALT",
+				"write": "0",
+				"action": "RIGHT"
+			},
+			{
+				"read": "x",
+				"to_state": "HALT",
+				"write": "x",
+				"action": "RIGHT"
+			},
+			{
+				"read": ".",
+				"to_state": "HALT",
+				"write": ".",
+				"action": "RIGHT"
+			}
+		]
+	}
+}
