@@ -16,8 +16,7 @@ def get_input():
 
     parser.add_argument("jsonfile", help="json description of the machine")
     parser.add_argument("input", help="input of the machine", type=str)
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 if __name__ == "__main__":

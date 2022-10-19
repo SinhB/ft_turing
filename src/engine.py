@@ -7,11 +7,18 @@ def update_tape(tape: str, head: str, write: str):
 
 def print_tape(tape:str, head: str, current_state: str, transition: object):
     print(
-        f"[{tape[0:head]}{colored('<'+tape[head]+'>', 'green')}{tape[head+1:]}]"
+        f"[{tape[0:head]}{colored(tape[head], 'green')}{tape[head+1:]}]"
         f"  |  ({current_state}, {tape[head]}) ->"
         f" ({transition[0]['to_state']},"
         f" {transition[0]['write']}, {transition[0]['action']})"
     )
+
+def get_action(head, action):
+    if action == "RIGHT":
+        return head + 1
+    if action == "LEFT":
+        return head - 1
+    return head
 
 def perform_transition(
     machine: object,
@@ -30,8 +37,14 @@ def perform_transition(
         machine,
         transition[0]["to_state"],
         update_tape(tape, head, transition[0]["write"]),
-        head + 1 if transition[0]["action"] == "RIGHT" else head - 1,
+        get_action(head, transition[0]["action"]),
     )
+    # engine(
+    #     machine,
+    #     transition[0]["to_state"],
+    #     update_tape(tape, head, transition[0]["write"]),
+    #     head + 1 if transition[0]["action"] == "RIGHT" else head - 1,
+    # )
 
 
 def engine(machine: object, current_state: str, tape: list, head: int):

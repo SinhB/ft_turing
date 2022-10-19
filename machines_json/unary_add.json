@@ -1,8 +1,8 @@
 {
     "name": "unary_add",
     "alphabet": [
-        "1",
         ".",
+        "1",
         "+"
     ],
     "blank": ".",
