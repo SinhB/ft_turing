@@ -1,0 +1,1429 @@
+{
+    "name": "utm",
+    "alphabet": [
+        "1",
+        "0",
+        "X",
+        "Y",
+        "Z",
+        "Q",
+        "B"
+    ],
+    "blank": "B",
+    "states": [
+        "initial",
+        "cpy_y_to_x_0",
+        "cpy_y_to_x_1",
+        "cpy_y_to_x_2",
+        "cpy_y_to_x_3",
+        "clear_y_after_cpy",
+        "move_to_x_after_cpy",
+        "mark_x_after_cpy",
+        "move_to_y_to_erase",
+        "move_to_z_to_cpy",
+        "cpy_z_to_x_0",
+        "cpy_z_to_x_1",
+        "cpy_z_to_x_2",
+        "cpy_z_to_x_3",
+        "clear_z_after_cpy",
+        "move_to_x_to_erase",
+        "move_to_q_to_set_y",
+        "set_y_marker",
+        "move_to_x_to_match_state",
+        "match_state_1_a",
+        "match_state_1_b",
+        "match_state_1_c",
+        "match_state_1_d",
+        "match_state_2_a",
+        "match_state_2_b",
+        "yes_match_state",
+        "no_match",
+        "clear_after_yes_match_state",
+        "mark_x_after_match_state",
+        "move_to_y_after_state_match",
+        "move_y_to_next_term",
+        "move_to_x_to_match_alph",
+        "match_alph_1_a",
+        "match_alph_1_b",
+        "match_alph_1_c",
+        "match_alph_1_d",
+        "match_alph_2_a",
+        "match_alph_2_b",
+        "yes_match_alph",
+        "clear_after_yes_match_alph",
+        "clear_buffer_until_first_x",
+        "clear_buffer_after_match",
+        "move_to_y_to_shift_2",
+        "move_y_to_second_state",
+        "move_y_to_second_symbol",
+        "clear_after_no_match",
+        "sub",
+        "move_far_right",
+        "shift_left",
+        "shift_left_1",
+        "shift_left_0",
+        "shift_right_1",
+        "shift_right_0",
+        "insert",
+        "insert_move_left_to_y",
+        "insert_mark_y",
+        "insert_move_right_to_z",
+        "insert_z",
+        "move_left_to_z",
+        "HALT"
+    ],
+    "initial": "initial",
+    "finals": [
+        "HALT"
+    ],
+    "transitions": {
+        "initial": [
+            {
+                "read": "1",
+                "to_state": "initial",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "initial",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "X",
+                "to_state": "initial",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "initial",
+                "write": "Q",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "cpy_y_to_x_0",
+                "write": "Y",
+                "action": "NONE"
+            },
+            {
+                "read": "Z",
+                "to_state": "sub",
+                "write": "Z",
+                "action": "RIGHT"
+            }
+        ],
+        "sub": [
+            {
+                "read": "1",
+                "to_state": "move_far_right",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "insert",
+                "write": "0",
+                "action": "LEFT"
+            }
+        ],
+        "insert": [
+            {
+                "read": "Z",
+                "to_state": "insert_move_left_to_y",
+                "write": "Z",
+                "action": "LEFT"
+            }
+        ],
+        "move_left_to_z": [
+            {
+                "read": "1",
+                "to_state": "move_left_to_z",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_left_to_z",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "Z",
+                "to_state": "insert",
+                "write": "Z",
+                "action": "NONE"
+            }
+        ],
+        "insert_move_left_to_y": [
+            {
+                "read": "1",
+                "to_state": "insert_move_left_to_y",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "insert_move_left_to_y",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "insert_mark_y",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "insert_move_left_to_y",
+                "write": "B",
+                "action": "LEFT"
+            }
+        ],
+        "insert_mark_y": [
+            {
+                "read": "1",
+                "to_state": "insert_move_right_to_z",
+                "write": "B",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "HALT",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "insert_mark_y",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "insert_move_right_to_z": [
+            {
+                "read": "1",
+                "to_state": "insert_move_right_to_z",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "insert_move_right_to_z",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Z",
+                "to_state": "insert_z",
+                "write": "Z",
+                "action": "RIGHT"
+            }
+        ],
+        "insert_z": [
+            {
+                "read": "1",
+                "to_state": "shift_right_1",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "shift_right_0",
+                "write": "1",
+                "action": "RIGHT"
+            }
+        ],
+        "shift_right_1": [
+            {
+                "read": "1",
+                "to_state": "shift_right_1",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "shift_right_0",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": ".",
+                "to_state": "move_left_to_z",
+                "write": "1",
+                "action": "LEFT"
+            }
+        ],
+        "shift_right_0": [
+            {
+                "read": "1",
+                "to_state": "shift_right_1",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "shift_right_0",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": ".",
+                "to_state": "move_left_to_z",
+                "write": "0",
+                "action": "LEFT"
+            }
+        ],
+        "move_far_right": [
+            {
+                "read": "1",
+                "to_state": "move_far_right",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_far_right",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "X",
+                "to_state": "move_far_right",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "move_far_right",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Z",
+                "to_state": "move_far_right",
+                "write": "Z",
+                "action": "RIGHT"
+            },
+            {
+                "read": ".",
+                "to_state": "shift_left",
+                "write": ".",
+                "action": "LEFT"
+            }
+        ],
+        "shift_left": [
+            {
+                "read": "1",
+                "to_state": "shift_left_1",
+                "write": ".",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "shift_left_0",
+                "write": ".",
+                "action": "LEFT"
+            }
+        ],
+        "shift_left_1": [
+            {
+                "read": "1",
+                "to_state": "shift_left_1",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "shift_left_0",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "Z",
+                "to_state": "sub",
+                "write": "Z",
+                "action": "RIGHT"
+            }
+        ],
+        "shift_left_0": [
+            {
+                "read": "1",
+                "to_state": "shift_left_1",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "shift_left_0",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "Z",
+                "to_state": "sub",
+                "write": "Z",
+                "action": "RIGHT"
+            }
+        ],
+        "cpy_y_to_x_0": [
+            {
+                "read": "1",
+                "to_state": "cpy_y_to_x_1",
+                "write": "B",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_y_after_cpy",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "cpy_y_to_x_0",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "cpy_y_to_x_0",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "cpy_y_to_x_1": [
+            {
+                "read": "1",
+                "to_state": "cpy_y_to_x_1",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "cpy_y_to_x_1",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "cpy_y_to_x_2",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "cpy_y_to_x_1",
+                "write": "Q",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "cpy_y_to_x_1",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "cpy_y_to_x_1",
+                "write": "B",
+                "action": "LEFT"
+            }
+        ],
+        "cpy_y_to_x_2": [
+            {
+                "read": "1",
+                "to_state": "cpy_y_to_x_2",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "cpy_y_to_x_3",
+                "write": "1",
+                "action": "RIGHT"
+            }
+        ],
+        "cpy_y_to_x_3": [
+            {
+                "read": "1",
+                "to_state": "cpy_y_to_x_3",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "cpy_y_to_x_3",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "cpy_y_to_x_3",
+                "write": "Q",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "cpy_y_to_x_3",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "cpy_y_to_x_0",
+                "write": "B",
+                "action": "NONE"
+            }
+        ],
+        "clear_y_after_cpy": [
+            {
+                "read": "Y",
+                "to_state": "move_to_x_after_cpy",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "clear_y_after_cpy",
+                "write": "1",
+                "action": "LEFT"
+            }
+        ],
+        "move_to_x_after_cpy": [
+            {
+                "read": "1",
+                "to_state": "move_to_x_after_cpy",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_x_after_cpy",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "mark_x_after_cpy",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "move_to_x_after_cpy",
+                "write": "Q",
+                "action": "LEFT"
+            }
+        ],
+        "mark_x_after_cpy": [
+            {
+                "read": "1",
+                "to_state": "mark_x_after_cpy",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_y_to_erase",
+                "write": "X",
+                "action": "RIGHT"
+            }
+        ],
+        "move_to_y_to_erase": [
+            {
+                "read": "0",
+                "to_state": "move_to_y_to_erase",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "move_to_z_to_cpy",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "move_to_y_to_erase",
+                "write": "Q",
+                "action": "RIGHT"
+            }
+        ],
+        "move_to_z_to_cpy": [
+            {
+                "read": "1",
+                "to_state": "move_to_z_to_cpy",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_z_to_cpy",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Z",
+                "to_state": "cpy_z_to_x_0",
+                "write": "Z",
+                "action": "RIGHT"
+            }
+        ],
+        "cpy_z_to_x_0": [
+            {
+                "read": "1",
+                "to_state": "cpy_z_to_x_1",
+                "write": "B",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_z_after_cpy",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "cpy_z_to_x_0",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "cpy_z_to_x_0",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "cpy_z_to_x_1": [
+            {
+                "read": "1",
+                "to_state": "cpy_z_to_x_1",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "cpy_z_to_x_1",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "cpy_z_to_x_2",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "cpy_z_to_x_1",
+                "write": "Q",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "cpy_z_to_x_1",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "Z",
+                "to_state": "cpy_z_to_x_1",
+                "write": "Z",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "cpy_z_to_x_1",
+                "write": "B",
+                "action": "LEFT"
+            }
+        ],
+        "cpy_z_to_x_2": [
+            {
+                "read": "1",
+                "to_state": "cpy_z_to_x_2",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "cpy_z_to_x_3",
+                "write": "1",
+                "action": "RIGHT"
+            }
+        ],
+        "cpy_z_to_x_3": [
+            {
+                "read": "1",
+                "to_state": "cpy_z_to_x_3",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "cpy_z_to_x_3",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "cpy_z_to_x_3",
+                "write": "Q",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "cpy_z_to_x_3",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Z",
+                "to_state": "cpy_z_to_x_3",
+                "write": "Z",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "cpy_z_to_x_0",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "clear_z_after_cpy": [
+            {
+                "read": "Z",
+                "to_state": "move_to_x_to_erase",
+                "write": "Z",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "clear_z_after_cpy",
+                "write": "1",
+                "action": "LEFT"
+            }
+        ],
+        "move_to_x_to_erase": [
+            {
+                "read": "1",
+                "to_state": "move_to_x_to_erase",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_x_to_erase",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "move_to_q_to_set_y",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "move_to_x_to_erase",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "Q",
+                "to_state": "move_to_x_to_erase",
+                "write": "Q",
+                "action": "LEFT"
+            }
+        ],
+        "move_to_q_to_set_y": [
+            {
+                "read": "1",
+                "to_state": "move_to_q_to_set_y",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_q_to_set_y",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "set_y_marker",
+                "write": "Q",
+                "action": "RIGHT"
+            }
+        ],
+        "set_y_marker": [
+            {
+                "read": "0",
+                "to_state": "move_to_x_to_match_state",
+                "write": "Y",
+                "action": "LEFT"
+            }
+        ],
+        "move_to_x_to_match_state": [
+            {
+                "read": "1",
+                "to_state": "move_to_x_to_match_state",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_x_to_match_state",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "match_state_1_a",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "move_to_x_to_match_state",
+                "write": "Q",
+                "action": "LEFT"
+            }
+        ],
+        "match_state_1_a": [
+            {
+                "read": "1",
+                "to_state": "match_state_1_b",
+                "write": "B",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_state_2_a",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "X",
+                "to_state": "match_state_1_a",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "match_state_1_a",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "match_state_1_b": [
+            {
+                "read": "1",
+                "to_state": "match_state_1_b",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_state_1_b",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "match_state_1_c",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "match_state_1_b",
+                "write": "Q",
+                "action": "RIGHT"
+            }
+        ],
+        "match_state_1_c": [
+            {
+                "read": "1",
+                "to_state": "match_state_1_d",
+                "write": "B",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "no_match",
+                "write": "0",
+                "action": "NONE"
+            },
+            {
+                "read": "B",
+                "to_state": "match_state_1_c",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "match_state_1_d": [
+            {
+                "read": "1",
+                "to_state": "match_state_1_d",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_state_1_d",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "match_state_1_a",
+                "write": "X",
+                "action": "NONE"
+            },
+            {
+                "read": "Q",
+                "to_state": "match_state_1_d",
+                "write": "Q",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "match_state_1_d",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "match_state_1_d",
+                "write": "B",
+                "action": "LEFT"
+            }
+        ],
+        "match_state_2_a": [
+            {
+                "read": "1",
+                "to_state": "match_state_2_a",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_state_2_a",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "match_state_2_a",
+                "write": "Q",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "match_state_2_b",
+                "write": "Y",
+                "action": "RIGHT"
+            }
+        ],
+        "match_state_2_b": [
+            {
+                "read": "1",
+                "to_state": "no_match",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "yes_match_state",
+                "write": "0",
+                "action": "NONE"
+            },
+            {
+                "read": "B",
+                "to_state": "match_state_2_b",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "yes_match_state": [
+            {
+                "read": "0",
+                "to_state": "clear_after_yes_match_state",
+                "write": "0",
+                "action": "RIGHT"
+            }
+        ],
+        "no_match": [
+            {
+                "read": "1",
+                "to_state": "clear_after_no_match",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_after_no_match",
+                "write": "0",
+                "action": "RIGHT"
+            }
+        ],
+        "clear_after_yes_match_state": [
+            {
+                "read": "1",
+                "to_state": "clear_after_yes_match_state",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_after_yes_match_state",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "mark_x_after_match_state",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "clear_after_yes_match_state",
+                "write": "Q",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "clear_after_yes_match_state",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "clear_after_yes_match_state",
+                "write": "1",
+                "action": "LEFT"
+            }
+        ],
+        "mark_x_after_match_state": [
+            {
+                "read": "1",
+                "to_state": "mark_x_after_match_state",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_y_after_state_match",
+                "write": "X",
+                "action": "RIGHT"
+            }
+        ],
+        "move_to_y_after_state_match": [
+            {
+                "read": "1",
+                "to_state": "move_to_y_after_state_match",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_y_after_state_match",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "move_to_y_after_state_match",
+                "write": "Q",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "move_y_to_next_term",
+                "write": "0",
+                "action": "RIGHT"
+            }
+        ],
+        "move_y_to_next_term": [
+            {
+                "read": "1",
+                "to_state": "move_y_to_next_term",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_x_to_match_alph",
+                "write": "Y",
+                "action": "LEFT"
+            }
+        ],
+        "move_to_x_to_match_alph": [
+            {
+                "read": "1",
+                "to_state": "move_to_x_to_match_alph",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_x_to_match_alph",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "match_alph_1_a",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "move_to_x_to_match_alph",
+                "write": "Q",
+                "action": "LEFT"
+            }
+        ],
+        "match_alph_1_a": [
+            {
+                "read": "1",
+                "to_state": "match_alph_1_b",
+                "write": "B",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_alph_2_a",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "X",
+                "to_state": "match_alph_1_a",
+                "write": "X",
+                "action": "RIGHT"
+            },
+            {
+                "read": "B",
+                "to_state": "match_alph_1_a",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "match_alph_1_b": [
+            {
+                "read": "1",
+                "to_state": "match_alph_1_b",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_alph_1_b",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "match_alph_1_c",
+                "write": "Y",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "match_alph_1_b",
+                "write": "Q",
+                "action": "RIGHT"
+            }
+        ],
+        "match_alph_1_c": [
+            {
+                "read": "1",
+                "to_state": "match_alph_1_d",
+                "write": "B",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "no_match",
+                "write": "0",
+                "action": "NONE"
+            },
+            {
+                "read": "B",
+                "to_state": "match_alph_1_c",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "match_alph_1_d": [
+            {
+                "read": "1",
+                "to_state": "match_alph_1_d",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_alph_1_d",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "match_alph_1_a",
+                "write": "X",
+                "action": "NONE"
+            },
+            {
+                "read": "Q",
+                "to_state": "match_alph_1_d",
+                "write": "Q",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "match_alph_1_d",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "match_alph_1_d",
+                "write": "B",
+                "action": "LEFT"
+            }
+        ],
+        "match_alph_2_a": [
+            {
+                "read": "1",
+                "to_state": "match_alph_2_a",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "match_alph_2_a",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "match_alph_2_a",
+                "write": "Q",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "match_alph_2_b",
+                "write": "Y",
+                "action": "RIGHT"
+            }
+        ],
+        "match_alph_2_b": [
+            {
+                "read": "1",
+                "to_state": "no_match",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "yes_match_alph",
+                "write": "0",
+                "action": "NONE"
+            },
+            {
+                "read": "B",
+                "to_state": "match_alph_2_b",
+                "write": "B",
+                "action": "RIGHT"
+            }
+        ],
+        "yes_match_alph": [
+            {
+                "read": "0",
+                "to_state": "clear_after_yes_match_alph",
+                "write": "0",
+                "action": "LEFT"
+            }
+        ],
+        "clear_after_yes_match_alph": [
+            {
+                "read": "1",
+                "to_state": "clear_after_yes_match_alph",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_after_yes_match_alph",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "Q",
+                "to_state": "clear_buffer_until_first_x",
+                "write": "Q",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "clear_after_yes_match_alph",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "clear_after_yes_match_alph",
+                "write": "1",
+                "action": "LEFT"
+            }
+        ],
+        "clear_buffer_until_first_x": [
+            {
+                "read": "1",
+                "to_state": "clear_buffer_until_first_x",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_buffer_until_first_x",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "clear_buffer_after_match",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "clear_buffer_until_first_x",
+                "write": "0",
+                "action": "LEFT"
+            }
+        ],
+        "clear_buffer_after_match": [
+            {
+                "read": "1",
+                "to_state": "clear_buffer_after_match",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_buffer_after_match",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "move_to_y_to_shift_2",
+                "write": "X",
+                "action": "RIGHT"
+            }
+        ],
+        "move_to_y_to_shift_2": [
+            {
+                "read": "1",
+                "to_state": "move_to_y_to_shift_2",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_to_y_to_shift_2",
+                "write": "0",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Q",
+                "to_state": "move_to_y_to_shift_2",
+                "write": "Q",
+                "action": "RIGHT"
+            },
+            {
+                "read": "Y",
+                "to_state": "move_y_to_second_state",
+                "write": "0",
+                "action": "RIGHT"
+            }
+        ],
+        "move_y_to_second_state": [
+            {
+                "read": "1",
+                "to_state": "move_y_to_second_state",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "move_y_to_second_symbol",
+                "write": "0",
+                "action": "RIGHT"
+            }
+        ],
+        "move_y_to_second_symbol": [
+            {
+                "read": "1",
+                "to_state": "move_y_to_second_symbol",
+                "write": "1",
+                "action": "RIGHT"
+            },
+            {
+                "read": "0",
+                "to_state": "sub",
+                "write": "Y",
+                "action": "RIGHT"
+            }
+        ],
+        "clear_after_no_match": [
+            {
+                "read": "1",
+                "to_state": "clear_after_no_match",
+                "write": "1",
+                "action": "LEFT"
+            },
+            {
+                "read": "0",
+                "to_state": "clear_after_no_match",
+                "write": "0",
+                "action": "LEFT"
+            },
+            {
+                "read": "X",
+                "to_state": "HALT",
+                "write": "X",
+                "action": "NONE"
+            },
+            {
+                "read": "Q",
+                "to_state": "clear_after_no_match",
+                "write": "Q",
+                "action": "LEFT"
+            },
+            {
+                "read": "Y",
+                "to_state": "clear_after_no_match",
+                "write": "Y",
+                "action": "LEFT"
+            },
+            {
+                "read": "B",
+                "to_state": "clear_after_no_match",
+                "write": "1",
+                "action": "LEFT"
+            }
+        ]
+    }
+}

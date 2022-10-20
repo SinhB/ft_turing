@@ -2,10 +2,11 @@
 
 import argparse
 from json import JSONDecodeError
-from engine import engine
 
-from error import ParsingError
-from health_check import checks
+from src.engine import engine
+from src.utils.error import ParsingError
+from src.utils.health_check import checks
+
 
 def get_input():
     """
@@ -15,14 +16,20 @@ def get_input():
 
     parser.add_argument("jsonfile", help="json description of the machine")
     parser.add_argument("input", help="input of the machine", type=str)
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
+
 
 if __name__ == "__main__":
     args = get_input()
     try:
         machine, input = checks(args)
-        engine(machine=machine, current_state=machine['initial'], tape=("." + input + "."), head=0)
+        engine(
+            machine=machine,
+            current_state=machine["initial"],
+            tape=(input + "."),
+            # tape=input,
+            head=0,
+        )
     except JSONDecodeError as e:
         print("JSON format error")
         print(e)
