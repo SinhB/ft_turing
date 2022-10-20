@@ -1,13 +1,25 @@
 import sys
 from termcolor import colored
 
+sys.setrecursionlimit(10000)
 
 def update_tape(tape: str, head: str, write: str):
+    if tape[-1] != '.':
+        return f"{tape[0:head]}{write}{tape[head+1:]}."    
     return f"{tape[0:head]}{write}{tape[head+1:]}"
 
 def print_tape(tape:str, head: str, current_state: str, transition: object):
+    new_tape = f"{tape[0:head]}{colored(tape[head], 'green')}{tape[head+1:]}"
+    if tape[head] != 'X':
+        new_tape = new_tape.replace("X", colored("X", "yellow"))
+    if tape[head] != 'Y':
+        new_tape = new_tape.replace("Y", colored("Y", "red"))
+    if tape[head] != 'Q':
+        new_tape = new_tape.replace("Q", colored("Q", "blue"))
+    if tape[head] != 'Z':
+        new_tape = new_tape.replace("Z", colored("Z", "red"))
     print(
-        f"[{tape[0:head]}{colored(tape[head], 'green')}{tape[head+1:]}]"
+        f"[{new_tape}]"
         f"  |  ({current_state}, {tape[head]}) ->"
         f" ({transition[0]['to_state']},"
         f" {transition[0]['write']}, {transition[0]['action']})"

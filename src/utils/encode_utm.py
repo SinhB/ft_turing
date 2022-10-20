@@ -121,7 +121,7 @@ def encode(machine: dict, tm_input):
     encoded_input = encode_input(tm_input, alphabet)
 
     #Create whole input
-    utm_input = f"{buffer}Y{turing_number}000Z{encoded_input}"
+    utm_input = f"{buffer}QY{turing_number}000Z{encoded_input}"
     return utm_input
 
 
