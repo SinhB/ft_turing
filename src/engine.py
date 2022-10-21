@@ -38,18 +38,21 @@ def perform_transition(
     head: int,
     current_state: str,
     transition: object,
+    count: int
 ):
     if len(transition) != 1:
-        sys.exit(
-            f"Expected 1 transition for state {current_state}"
-            f" with read {tape[head]}, got {len(transition)}"
-        )
+        raise SyntaxError(f"Expected 1 transition for state {current_state}" + f" with read {tape[head]}, got {len(transition)}")
+        # sys.exit(
+        #     f"Expected 1 transition for state {current_state}"
+        #     f" with read {tape[head]}, got {len(transition)}"
+        # )
     print_tape(tape, head, current_state, transition)
     return engine(
         machine,
         transition[0]["to_state"],
         update_tape(tape, head, transition[0]["write"]),
         get_action(head, transition[0]["action"]),
+        count + 1
     )
     # engine(
     #     machine,
@@ -62,12 +65,13 @@ def perform_transition(
 def engine(machine: object, current_state: str, tape: list, head: int, count: int):
     if current_state in machine["finals"]:
         return count
-        sys.exit(
-            # f"[{tape[0:head]}<{tape[head]}>{tape[head+1:]}]"
-            # f"  |  ({current_state}, {tape[head]})"
-        )
+        # sys.exit(
+        #     # f"[{tape[0:head]}<{tape[head]}>{tape[head+1:]}]"
+        #     # f"  |  ({current_state}, {tape[head]})"
+        # )
     if head == len(tape) or head < 0:
-        sys.exit("no solution")
+        raise SyntaxError("no solution")
+        # sys.exit("no solution")
     return perform_transition(
         machine,
         tape,
@@ -79,4 +83,5 @@ def engine(machine: object, current_state: str, tape: list, head: int, count: in
                 machine["transitions"][current_state],
             )
         ),
+        count
     )
