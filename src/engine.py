@@ -22,8 +22,7 @@ def print_tape(tape:str, head: str, current_state: str, transition: object):
         f"[{new_tape}]"
         f"  |  ({current_state}, {tape[head]}) ->"
         f" ({transition[0]['to_state']},"
-        f" {transition[0]['write']}, {transition[0]['action']})"
-    )
+        f" {transition[0]['write']}, {transition[0]['action']})")
 
 def get_action(head, action):
     if action == "RIGHT":
@@ -38,36 +37,26 @@ def perform_transition(
     head: int,
     current_state: str,
     transition: object,
+    count: int
 ):
     if len(transition) != 1:
-        sys.exit(
-            f"Expected 1 transition for state {current_state}"
-            f" with read {tape[head]}, got {len(transition)}"
-        )
+        raise SyntaxError(f"Expected 1 transition for state {current_state}" + f" with read {tape[head]}, got {len(transition)}")
     print_tape(tape, head, current_state, transition)
-    engine(
-        machine,
-        transition[0]["to_state"],
-        update_tape(tape, head, transition[0]["write"]),
-        get_action(head, transition[0]["action"]),
-    )
-    # engine(
-    #     machine,
-    #     transition[0]["to_state"],
-    #     update_tape(tape, head, transition[0]["write"]),
-    #     head + 1 if transition[0]["action"] == "RIGHT" else head - 1,
-    # )
+    return {
+        "machine": machine,
+        "current_state": transition[0]["to_state"],
+        "tape": update_tape(tape, head, transition[0]["write"]),
+        "head": get_action(head, transition[0]["action"]),
+        "count": count + 1
+    }
 
-
-def engine(machine: object, current_state: str, tape: list, head: int):
+def engine(machine: object, current_state: str, tape: list, head: int, count: int):
     if current_state in machine["finals"]:
-        sys.exit(
-            # f"[{tape[0:head]}<{tape[head]}>{tape[head+1:]}]"
-            # f"  |  ({current_state}, {tape[head]})"
-        )
+        return count
     if head == len(tape) or head < 0:
-        sys.exit("no solution")
-    perform_transition(
+        raise SyntaxError("no solution")
+        # sys.exit("no solution")
+    return perform_transition(
         machine,
         tape,
         head,
@@ -78,4 +67,16 @@ def engine(machine: object, current_state: str, tape: list, head: int):
                 machine["transitions"][current_state],
             )
         ),
+        count
     )
+
+def run_engine(x: dict):
+    while (type(x) != int):
+        x = engine(
+            x['machine'],
+            x['current_state'],
+            x['tape'],
+            x['head'],
+            x['count']
+        )
+    return x

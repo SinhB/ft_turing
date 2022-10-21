@@ -118,7 +118,7 @@ def encode(machine: dict, tm_input):
     turing_number = "00".join(transitions)
     
     #Create tape description part
-    encoded_input = encode_input(tm_input, alphabet)
+    encoded_input = encode_input(tm_input + ".", alphabet)
 
     #Create whole input
     utm_input = f"{buffer}QY{turing_number}000Z{encoded_input}"
