@@ -5,8 +5,8 @@ from src.utils.error import (
     BlankInInput,
     InputCharError,
     MissingFieldError,
-    TransitionValueError,
     TransitionsDefinitionFieldError,
+    TransitionValueError,
     WrongBlankFieldError,
     WrongFinalsFieldError,
     WrongInitialFieldError,
@@ -24,7 +24,6 @@ def checks(arguments):
     if hasattr(arguments, "input"):
         return input_check(health_check(arguments.jsonfile), arguments.input)
     return health_check(arguments.jsonfile)
-
 
 
 def health_check(jsonfile: dict):
@@ -147,16 +146,28 @@ def check_transition_definition(machine: dict):
                     set(required_fields) - set(item.keys()),
                 )
 
+
 def check_transition_values(machine: dict):
     """Check if all values in transitions are allowed"""
     for transition_name, transition_list in machine["transitions"].items():
         for item in transition_list:
             if item["read"] not in machine["alphabet"]:
-                raise TransitionValueError(f"Wrong transition value for {transition_name} read", item["read"])
+                raise TransitionValueError(
+                    f"Wrong transition value for {transition_name} read",
+                    item["read"],
+                )
             if item["to_state"] not in machine["states"]:
-                raise TransitionValueError(f"Wrong transition value for {transition_name} to_state", item["to_state"])
+                raise TransitionValueError(
+                    f"Wrong transition value for {transition_name} to_state",
+                    item["to_state"],
+                )
             if item["write"] not in machine["alphabet"]:
-                raise TransitionValueError(f"Wrong transition value for {transition_name} write", item["write"])
+                raise TransitionValueError(
+                    f"Wrong transition value for {transition_name} write",
+                    item["write"],
+                )
             if item["action"] not in ["RIGHT", "LEFT", "NONE"]:
-                raise TransitionValueError(f"Wrong transition value for {transition_name} action", item["action"])
-
+                raise TransitionValueError(
+                    f"Wrong transition value for {transition_name} action",
+                    item["action"],
+                )
