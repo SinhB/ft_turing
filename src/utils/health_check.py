@@ -1,6 +1,6 @@
 import json
 
-from src.utils.error import (
+from utils.error import (
     AlphabetLenValueError,
     BlankInInput,
     InputCharError,

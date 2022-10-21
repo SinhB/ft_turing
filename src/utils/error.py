@@ -48,3 +48,22 @@ class BlankInInput(ParsingError):
 
 class InputCharError(ParsingError):
     """Wrong char in input"""
+
+
+class MachineError(Exception):
+    """Machine error"""
+
+    def __init__(self, message: str, value=None) -> None:
+        super().__init__()
+        self.message = message
+        self.values = value
+
+    def __str__(self) -> str:
+        return f"{self.message}: {self.values}"
+
+class NoTransitionError(MachineError):
+    """No transition found"""
+
+class NoSolutionError(MachineError):
+    """No solution found"""
+    
