@@ -45,7 +45,7 @@ def perform_transition(
             f" with read {tape[head]}, got {len(transition)}"
         )
     print_tape(tape, head, current_state, transition)
-    engine(
+    return engine(
         machine,
         transition[0]["to_state"],
         update_tape(tape, head, transition[0]["write"]),
@@ -59,15 +59,16 @@ def perform_transition(
     # )
 
 
-def engine(machine: object, current_state: str, tape: list, head: int):
+def engine(machine: object, current_state: str, tape: list, head: int, count: int):
     if current_state in machine["finals"]:
+        return count
         sys.exit(
             # f"[{tape[0:head]}<{tape[head]}>{tape[head+1:]}]"
             # f"  |  ({current_state}, {tape[head]})"
         )
     if head == len(tape) or head < 0:
         sys.exit("no solution")
-    perform_transition(
+    return perform_transition(
         machine,
         tape,
         head,
