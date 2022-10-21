@@ -3,7 +3,7 @@
 import argparse
 from json import JSONDecodeError
 
-from src.engine import engine
+from src.engine import engine, run_engine
 from src.utils.error import ParsingError
 from src.utils.health_check import checks
 
@@ -23,13 +23,21 @@ if __name__ == "__main__":
     args = get_input()
     try:
         machine, input = checks(args)
-        engine(
-            machine=machine,
-            current_state=machine["initial"],
-            tape=(input + "."),
-            # tape=input,
-            head=0,
-        )
+        # engine(
+        #     machine=machine,
+        #     current_state=machine["initial"],
+        #     tape=(input + "."),
+        #     # tape=input,
+        #     head=0,
+        # )
+        x = {
+                'machine': machine,
+                'current_state': machine["initial"],
+                'tape': (input + "."),
+                'head': 0,
+                'count': 0
+            }
+        run_engine(x)
     except JSONDecodeError as e:
         print("JSON format error")
         print(e)

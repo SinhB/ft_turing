@@ -38,6 +38,10 @@ class TransitionsDefinitionFieldError(ParsingError):
     """Transition definition field"""
 
 
+class TransitionValueError(ParsingError):
+    """Transition values"""
+
+
 class BlankInInput(ParsingError):
     """Blank char in input"""
 

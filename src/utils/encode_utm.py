@@ -12,7 +12,9 @@
         - tape description
     A = {0, 1, X, Y, Z, B} (alphabet)
     Q = turing states
-    buffer len = (r + s + 2) -> r = number or states, s = number of symbols in alphabet
+    buffer len = (r + s + 2)
+        r = number or states
+        s = number of symbols in alphabet
 
     Turing program:
         BLANK_VALUE = 1
@@ -30,7 +32,7 @@
         ...
         qn = 1(n) + 1
         halt = (1)n + 2
-        
+
         separator = 0
         quintuplet separator = 00
 
@@ -51,10 +53,8 @@
 import argparse
 from json import JSONDecodeError
 
-from src.engine import engine
 from error import ParsingError
 from health_check import checks
-
 
 
 def get_input():
@@ -67,6 +67,7 @@ def get_input():
     parser.add_argument("input", help="input of the machine", type=str)
     return parser.parse_args()
 
+
 def encode_states_or_alphabet(machine_list):
     """
     Encode states or alphabet
@@ -76,22 +77,28 @@ def encode_states_or_alphabet(machine_list):
         encoded_dict[item] = "1" * counter
     return encoded_dict
 
+
 def encode_transitions(machine_transitions, encoded_states, encoded_aphabet):
     """
     Encode transitions
     """
     encoded_transitions_list = []
+
     def encode_transition(name, transition):
         for item in transition:
             direction = "1" if item["action"] == "LEFT" else "111"
             read = encoded_aphabet[item["read"]]
             to_state = encoded_states[item["to_state"]]
             write = encoded_aphabet[item["write"]]
-            encoded_transition= f"{name}0{read}0{to_state}0{write}0{direction}"
+            encoded_transition = (
+                f"{name}0{read}0{to_state}0{write}0{direction}"
+            )
             encoded_transitions_list.append(encoded_transition)
+
     for name, transition in machine_transitions.items():
         encode_transition(encoded_states[name], transition)
     return encoded_transitions_list
+
 
 def encode_input(tm_input, alphabet):
     """
@@ -102,6 +109,7 @@ def encode_input(tm_input, alphabet):
         encoded_input_list.append(alphabet[symbol])
     return "0".join(encoded_input_list)
 
+
 def encode(machine: dict, tm_input):
     """
     Encode machine
@@ -109,18 +117,18 @@ def encode(machine: dict, tm_input):
     states = encode_states_or_alphabet(machine["states"])
     alphabet = encode_states_or_alphabet(machine["alphabet"])
 
-    #Create buffer part
+    # Create buffer part
     buffer_size = len(machine["states"]) + len(machine["alphabet"]) + 2
     buffer = f"X{'0' * buffer_size}"
 
-    #Create machine description part
+    # Create machine description part
     transitions = encode_transitions(machine["transitions"], states, alphabet)
     turing_number = "00".join(transitions)
-    
-    #Create tape description part
-    encoded_input = encode_input(tm_input, alphabet)
 
-    #Create whole input
+    # Create tape description part
+    encoded_input = encode_input(tm_input + ".", alphabet)
+
+    # Create whole input
     utm_input = f"{buffer}QY{turing_number}000Z{encoded_input}"
     return utm_input
 
