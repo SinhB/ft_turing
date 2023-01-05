@@ -167,6 +167,12 @@
 				"to_state": "qreject",
 				"write": "X",
 				"action": "RIGHT"
+			},
+			{
+				"read": "Y",
+				"to_state": "qreject",
+				"write": "Y",
+				"action": "RIGHT"
 			}
 		],
 		"qend": [

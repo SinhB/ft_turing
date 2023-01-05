@@ -59,11 +59,16 @@ class MachineError(Exception):
         self.values = value
 
     def __str__(self) -> str:
-        return f"{self.message}: {self.values}"
+        return f"{self.message}{f': {self.values}' if self.values else ''}"
+
 
 class NoTransitionError(MachineError):
     """No transition found"""
 
+
 class NoSolutionError(MachineError):
     """No solution found"""
-    
+
+
+class InfiniteLoopError(MachineError):
+    """InfiniteLoopError"""
